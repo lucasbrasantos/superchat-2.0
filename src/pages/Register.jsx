@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
 import Add from '../imgs/addAvatar.png';
 import Swal from 'sweetalert2'
+import GoogleBtn from '../components/GoogleBtn';
 
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
+import { auth, storage, db, googleProvider } from "../firebase";
 
-import { auth, storage, db } from "../firebase";
 
 const Register = () => {
+
+
     const [err, setErr] = useState(false);
+
+    const handleButtonLoginGoogle = () => {
+
+        signInWithPopup(auth, googleProvider);
+
+    }
     
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -39,19 +48,19 @@ const Register = () => {
                 console.log(`${errorCode}\n${errorMessage}`);
                 setErr(true);
 
-                errorCode == "auth/invalid-email" ? Swal.fire({
+                errorCode === "auth/invalid-email" ? Swal.fire({
                     title: 'Error!',
                     text: "Invalid Email",
                     icon: 'error',
                     confirmButtonText: 'Return'
                 })
-                : errorCode == "auth/weak-password" ? Swal.fire({
+                : errorCode === "auth/weak-password" ? Swal.fire({
                     title: 'Error!',
                     text: `Weak Password, password should be at least 6 characters`,
                     icon: 'error',
                     confirmButtonText: 'Return'
                 })
-                : errorCode == "auth/email-already-in-use" ? Swal.fire({
+                : errorCode === "auth/email-already-in-use" ? Swal.fire({
                     title: 'Error!',
                     text: `Email Already In Use! try again with another email`,
                     icon: 'error',
@@ -84,6 +93,9 @@ const Register = () => {
                             email,
                             photoURL: downloadURL
                         })
+
+                        await setDoc(doc(db, "userChats", user.uid), {})
+
                     });
                 }
             );
@@ -117,7 +129,10 @@ const Register = () => {
                 <button >Sign up</button>
             </form>
                 {err && <span className='error'>something went wrong! </span>}
-            <p>Do you have an account? Login</p>
+            <p>Do you have an account? <a href="/login" >login</a></p>
+            <p>Or</p>
+            
+            <a onClick={handleButtonLoginGoogle}><GoogleBtn/></a>
         </div>
 
     </div>
