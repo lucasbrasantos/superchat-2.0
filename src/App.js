@@ -1,4 +1,5 @@
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 import './style.scss';
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
         <div>
       
             <Register/>
+            <Login/>
 
         </div>
     );
