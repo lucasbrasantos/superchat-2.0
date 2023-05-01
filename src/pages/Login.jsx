@@ -15,7 +15,7 @@ const Login = () => {
                 <button>Sign in</button>
                 <button>Sign in with google</button>
             </form>
-            <p>Do you have an account? Register</p>
+            <p>Does not have an account? <a href="/register">register</a></p>
         </div>
 
     </div>
