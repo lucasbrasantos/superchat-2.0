@@ -1,0 +1,95 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@100;200;300;400;500;600;700;900&display=swap');
+
+*{
+    font-family: 'Libre Franklin', sans-serif;
+}
+
+.formContainer{
+    background: rgb(30,96,190);
+    background: linear-gradient(70deg, rgba(30,96,190,1) 19%, rgba(235,0,255,1) 98%);
+    background-image: url('./imgs/wavygrassimg.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    .formWrapper{        
+        backdrop-filter: blur(30px);
+        background: rgba(227, 241, 227, 0.288);
+        box-shadow: -5px -4px 8px rgba(255, 255, 255, 0.103);
+        box-shadow: 4px 4px 8px rgba(59, 59, 59, 0.637);
+        padding: 34px 48px;
+        border-radius: 32px;
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .logo{
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        hr{
+            width: 90%;
+            height: 1px;
+            background: rgb(122, 122, 122);
+            border: none;
+            margin: 10px 0;
+        }
+        .title{
+            font-size: 1.2rem;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 340px;
+            margin-top: 25px;
+            
+            
+            input{
+                font-size: 14px;
+                padding: 8px 10px;
+                border-radius: 10px;
+                outline: none;
+                border: none;
+                box-shadow: 5px 4px 6px rgba(105, 105, 105, 0.493);
+                background: rgb(255, 255, 255);
+            }
+
+
+            button{
+                padding: 14px 0;
+                font-weight: 500;
+                border-radius: 14px;
+                background: #8595C8;
+                color: white;
+                border: none;
+                outline: none;
+                margin: 20px 0;
+            }
+
+            label{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 160px;
+                gap: 10px;
+                color: #eeeeee;
+                font-size: 14px;
+                margin: 0 auto;
+                cursor: pointer;
+                img{
+                    width: 40px;
+                }
+            }
+
+        }
+    }
+}
