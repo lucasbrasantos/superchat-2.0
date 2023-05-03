@@ -1,8 +1,22 @@
 import React from 'react'
 import Add from '../imgs/addAvatar.png';
+import GoogleBtn from '../components/GoogleBtn';
+
+
+import { auth, googleProvider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const Login = () => {
-  return (
+
+    const handleButtonLoginGoogle = () => {
+
+        signInWithPopup(auth, googleProvider);
+
+    }
+
+
+  return (    
+
     <div className='formContainer'>
 
         <div className="formWrapper">
@@ -13,9 +27,10 @@ const Login = () => {
                 <input type="email" placeholder='email'/>
                 <input type="password" placeholder='password'/>
                 <button>Sign in</button>
-                <button>Sign in with google</button>
             </form>
             <p>Does not have an account? <a href="/register">register</a></p>
+            <p>Or</p>
+            <a className='btnGoogleWrapper' onClick={handleButtonLoginGoogle}><GoogleBtn/></a>
         </div>
 
     </div>
