@@ -2,16 +2,46 @@ import React from 'react'
 import Add from '../imgs/addAvatar.png';
 import GoogleBtn from '../components/GoogleBtn';
 
-
-import { auth, googleProvider } from "../firebase";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+    const navigate = useNavigate();
+    
     const handleButtonLoginGoogle = () => {
+        
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+        .then(async(result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            const user = result.user;
 
-        signInWithPopup(auth, googleProvider);
+            // console.log(credential);
+            // console.log(token);
+            // console.log(user);
 
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid, 
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL
+            });
+
+
+            navigate("/");
+
+        }).catch((error) => {
+            console.log(error);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.customData.email
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            return;
+        });
     }
 
 
