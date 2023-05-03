@@ -1,6 +1,7 @@
 import React from 'react'
 
 const GoogleBtn = () => {
+  
   return (
     <div class="google-btn">
     <div class="google-icon-wrapper">
