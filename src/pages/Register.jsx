@@ -7,12 +7,14 @@ import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db, googleProvider } from "../firebase";
+import {  useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
 
 
     const [err, setErr] = useState(false);
+    const navigate = useNavigate();
 
     const handleButtonLoginGoogle = () => {
 
@@ -86,15 +88,19 @@ const Register = () => {
                         await updateProfile(user, {
                             displayName,
                             photoURL:downloadURL 
-                        })
+                        });
 
                         await setDoc(doc(db, "users", user.uid), {
+                            uid: user.uid, 
                             displayName,
                             email,
                             photoURL: downloadURL
-                        })
+                        });
 
-                        await setDoc(doc(db, "userChats", user.uid), {})
+                        // await setDoc(doc(db, "userChats", user.uid), {});
+                        
+                        navigate("/");
+                        console.log('asd');
 
                     });
                 }
@@ -130,9 +136,8 @@ const Register = () => {
             </form>
                 {err && <span className='error'>something went wrong! </span>}
             <p>Do you have an account? <a href="/login" >login</a></p>
-            <p>Or</p>
-            
-            <a onClick={handleButtonLoginGoogle}><GoogleBtn/></a>
+            <p>Or</p>            
+            <a className='btnGoogleWrapper' onClick={handleButtonLoginGoogle}><GoogleBtn/></a>
         </div>
 
     </div>
