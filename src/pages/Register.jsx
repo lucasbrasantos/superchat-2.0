@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleA
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const Register = () => {
@@ -62,6 +62,7 @@ const Register = () => {
             const res = await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
+                setErr(false);
                 user = userCredential.user;
                 // console.log(user);
                 Swal.fire(
@@ -109,7 +110,7 @@ const Register = () => {
                     setErr(true);
                 },
                 () => {
-                    
+                    setErr(false);
                     getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
                         // console.log('File available at', downloadURL);
                         await updateProfile(user, {
@@ -160,8 +161,8 @@ const Register = () => {
                 </label>
                 <button >Sign up</button>
             </form>
-                {err && <span className='error'>something went wrong! </span>}
-            <p>Do you have an account? <a href="/login" >login</a></p>
+                {err && <span className='error'>something went wrong!</span>}
+            <p>Do you have an account? <Link to="/login">Login</Link> </p>
             <p>Or</p>            
             <a className='btnGoogleWrapper' onClick={handleButtonLoginGoogle}><GoogleBtn/></a>
         </div>
