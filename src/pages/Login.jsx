@@ -32,6 +32,8 @@ const Login = () => {
                 photoURL: user.photoURL
             });
 
+            await setDoc(doc(db, "userChats", user.uid), {});
+
 
             navigate("/");
 
