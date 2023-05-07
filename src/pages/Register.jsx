@@ -33,7 +33,7 @@ const Register = () => {
 
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid, 
-                displayName: user.displayName,
+                displayName: user.displayName.toLowerCase(),
                 email: user.email,
                 photoURL: user.photoURL
             });
@@ -61,7 +61,7 @@ const Register = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const displayName = e.target[0].value;
+        const displayName = e.target[0].value.toLowerCase();
         const email = e.target[1].value;
         const password = e.target[2].value;
         const file = {x:e.target[3].files[0]}

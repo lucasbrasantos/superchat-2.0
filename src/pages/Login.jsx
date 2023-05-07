@@ -27,7 +27,7 @@ const Login = () => {
 
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid, 
-                displayName: user.displayName,
+                displayName: user.displayName.toLowerCase(),
                 email: user.email,
                 photoURL: user.photoURL
             });
@@ -45,7 +45,7 @@ const Login = () => {
         });
     }
 
-    const [err, setErr] = useState()
+    const [err, setErr] = useState(false)
     const handleSubmit = async(e) => {
         setErr(false);
         e.preventDefault();
