@@ -5,7 +5,7 @@ const Chats = () => {
     <div className='chats'>
       <div className="userChat">
             <img src="https://images.pexels.com/photos/936049/pexels-photo-936049.jpeg" alt="" />
-            <div cl assName="userChatInfo">
+            <div className="userChatInfo">
                 <span>John</span>
                 <p>hello</p>
             </div>
