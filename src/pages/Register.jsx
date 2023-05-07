@@ -15,6 +15,7 @@ const Register = () => {
 
     const [err, setErr] = useState(false);
     const navigate = useNavigate();
+    const alertTime = 1600;
 
     const handleButtonLoginGoogle = () => {
         
@@ -43,7 +44,7 @@ const Register = () => {
             console.log(error);
             const errorCode = error.code;
             const errorMessage = error.message;
-            const email = error.customData.email
+            const email = error.customData.email            
             const credential = GoogleAuthProvider.credentialFromError(error);
             return;
         });
@@ -65,43 +66,56 @@ const Register = () => {
                 setErr(false);
                 user = userCredential.user;
                 // console.log(user);
-                Swal.fire(
-                    'Success',
-                    ' ',
-                    'success'
-                );
+                Swal.fire({
+                    title: 'Success',
+                    text: ' ',
+                    icon: 'success',
+                    timer: alertTime
+                });
             })
             .catch((error) => {
                 
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(`${errorCode}\n${errorMessage}`);
-                setErr(true);
+                console.warn(`${errorCode}\n${errorMessage}`);
+                setErr(true);                
 
                 errorCode === "auth/invalid-email" ? Swal.fire({
                     title: 'Error!',
                     text: "Invalid email",
                     icon: 'error',
-                    confirmButtonText: 'Return'
+                    confirmButtonText: 'Return',
+                    timer: alertTime
                 })
                 : errorCode === "auth/weak-password" ? Swal.fire({
                     title: 'Error!',
                     text: `Weak password, password should be at least 6 characters`,
                     icon: 'error',
-                    confirmButtonText: 'Return'
+                    confirmButtonText: 'Return',
+                    timer: alertTime
                 })
                 : errorCode === "auth/email-already-in-use" ? Swal.fire({
                     title: 'Error!',
                     text: `Email already in use! try again with another email`,
                     icon: 'error',
-                    confirmButtonText: 'Return'
-                })            
-                : console.log(`${errorCode}\n${errorMessage}`);
+                    confirmButtonText: 'Return',
+                    timer: alertTime
+                })
+                : errorCode === "auth/missing-email" ? Swal.fire({
+                    title: 'Error!',
+                    text: `Missing email`,
+                    icon: 'error',
+                    confirmButtonText: 'Return',
+                    timer: alertTime
+                })             
+                : console.warn(`Diferent error: ${errorCode}\n${errorMessage}`);
 
-
-
+                
             });
-
+            
+            err === true ? (function(){throw new Error(`\nreturn error: ${err}`)}()) : console.log(err);
+            
+            console.log('asd');
             const storageRef = ref(storage, displayName);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -136,7 +150,7 @@ const Register = () => {
 
         }catch(err){
             setErr(true)
-            console.log(err);
+            console.log(`l.145 ${err}`);
         }
         
     }
