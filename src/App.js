@@ -13,7 +13,7 @@ function App() {
 
     const ProtectedRoute = ({children}) => {
         if (!currentUser) {
-            return <Navigate to="/login" />
+            return <Navigate to="superchat-2.0/login" />
         }else return children
     }
 
@@ -23,10 +23,10 @@ function App() {
     return (
         <BrowserRouter basename="/superchat-2.0">
             <Routes>
-                <Route path="/">
+                <Route path="/superchat-2.0/">
                     <Route index element={ <ProtectedRoute><Home/></ProtectedRoute> } />
-                    <Route path="register" element={<Register/>} />
-                    <Route path="login" element={<Login/>} />
+                    <Route path="superchat-2.0/register" element={<Register/>} />
+                    <Route path="superchat-2.0/login" element={<Login/>} />
                 </Route>
             </Routes>
 
