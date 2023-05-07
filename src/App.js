@@ -17,11 +17,11 @@ function App() {
         }else return children
     }
 
-    console.log('current user:');
-    console.log(currentUser);
+    // console.log('current user:');
+    // console.log(currentUser);
 
     return (
-        <BrowserRouter basename="/superchat-2.0">
+        <BrowserRouter basename="/">
             <Routes>
                 <Route path="/">
                     <Route index element={ <ProtectedRoute><Home/></ProtectedRoute> } />
