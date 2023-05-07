@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { collection, query, where, getDocs, getDoc } from 'firebase/firestore';
+import React, { useContext, useState } from 'react'
+import { collection, query, where, getDocs, getDoc, doc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from "../firebase";
+import { AuthContext } from '../context/AuthContext';
 
 const Search = () => {
 
@@ -8,7 +9,7 @@ const Search = () => {
   	const [user, setUser] = useState(null);
   	const [err, setErr] = useState(false);
 
-
+	const {currentUser} = useContext(AuthContext)
 
 	const handleSearch = async(x) => {
 
@@ -30,23 +31,63 @@ const Search = () => {
 
 		} catch (error) {
 			setErr(true)
+		}		
+
+	}
+	
+	
+	const handleSelect = async() => {		
+		const combinedId = currentUser.uid > user.uid
+			? currentUser.uid + user.uid
+			: user.uid + currentUser.uid
+
+		try {
+			const res = await getDoc(doc(db, "chats", combinedId));
+
+			if (!res.exists()) {
+				
+				//create a chat in chats collection
+				await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+				//create user chats
+				await updateDoc(doc(db, "userChats", currentUser.uid), {
+
+					[combinedId+".userInfo"]: {
+						uid: user.uid,
+						displayName: user.displayName,
+						photoURL: user.photoURL
+					},
+					[combinedId+".date"]: serverTimestamp()
+				});
+
+				await updateDoc(doc(db, "userChats", user.uid), {
+
+					[combinedId+".userInfo"]: {
+						uid: currentUser.uid,
+						displayName: currentUser.displayName,
+						photoURL: currentUser.photoURL
+					},
+					[combinedId+".date"]: serverTimestamp()
+				});
+
+				document.getElementById("searchUser").value = "";				
+				setUser(null);
+				console.log(user);
+			}
+
+		} catch (err) {
+			setErr(true)
+			console.log(err);
 		}
-		
-		// console.log(user);
 
 	}
-
-
-	const handleSelect = () => {
-		
-	}
-
+	
 
   return (
     <div className='search'>
 
         <div className="searchForm">
-            <input type="text" placeholder='find a user:' onChange={async(e) => {				
+            <input type="text" id="searchUser" placeholder='find a user:' onChange={async(e) => {				
 				handleSearch(e.target.value);
 			}}/>
         </div>
