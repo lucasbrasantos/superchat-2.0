@@ -106,7 +106,7 @@ const Login = () => {
                     text: "Access to this account has been temporarily disabled due to many failed login attempts. Please, try again later.",
                     icon: 'error',
                     confirmButtonText: 'Return',
-                    timer: alertTime
+                    timer: 4000
                 })
                 : console.log(`${errorCode}\n${errorMessage}`);
 
