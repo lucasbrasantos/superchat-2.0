@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Add from '../imgs/addAvatar.png';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import GoogleBtn from '../components/GoogleBtn';
+import noProfilePic from '../imgs/userIcon.png';
 
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -50,12 +51,27 @@ const Register = () => {
         });
     }
     
+    async function getFileFromUrl(url, name, defaultType = 'image/jpeg'){
+        const response = await fetch(url);
+        const data = await response.blob();
+        return new File([data], name, {
+          type: data.type || defaultType,
+        });
+    }
+
     const handleSubmit = async(e) => {
         e.preventDefault();
         const displayName = e.target[0].value;
         const email = e.target[1].value;
         const password = e.target[2].value;
-        const file = e.target[3].files[0];
+        const file = {x:e.target[3].files[0]}
+
+        if (!file.x) {            
+            file.x = await getFileFromUrl(noProfilePic, 'userIcon.jpg');
+        }
+        
+        // console.log(file);
+
         
         try {
             
@@ -115,10 +131,10 @@ const Register = () => {
             
             err === true ? (function(){throw new Error(`\nreturn error: ${err}`)}()) : console.log(err);
             
-            console.log('asd');
             const storageRef = ref(storage, displayName);
-            const uploadTask = uploadBytesResumable(storageRef, file);
+            const uploadTask = uploadBytesResumable(storageRef, file.x);
 
+            console.log(uploadTask);
             uploadTask.on(
                 (error) => {
                     setErr(true);
@@ -139,10 +155,9 @@ const Register = () => {
                             photoURL: downloadURL
                         });
 
-                        // await setDoc(doc(db, "userChats", user.uid), {});
+                        await setDoc(doc(db, "userChats", user.uid), {uid: user.uid});
                         
                         navigate("/");
-
                     });
                 }
             );
@@ -152,6 +167,7 @@ const Register = () => {
             setErr(true)
             console.log(`l.145 ${err}`);
         }
+        
         
     }
     
