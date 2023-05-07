@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Add from '../imgs/addAvatar.png';
+import Swal from 'sweetalert2'
 import GoogleBtn from '../components/GoogleBtn';
 
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
@@ -55,11 +56,60 @@ const Login = () => {
         try {
             await signInWithEmailAndPassword(auth, email, password)
 
-            navigate("/")
+            .then((response) => {
+                setErr(false);
+                const res = response;
+                
+                // console.log(res);                
+                // Swal.fire('Success', ' ', 'success');
+                navigate("/");
+
+            }).catch((error) => {
+
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(`${errorCode}\n${errorMessage}`);
+                setErr(true);
+
+                errorCode === 'auth/user-not-found' ? Swal.fire({
+                    title: 'Error!',
+                    text: "User not found",
+                    icon: 'error',
+                    confirmButtonText: 'Return'
+                })
+                : errorCode === 'auth/wrong-password' ? Swal.fire({
+                    title: 'Error!',
+                    text: "Wrong password",
+                    icon: 'error',
+                    confirmButtonText: 'Return'
+                })
+                : errorCode === 'auth/missing-password' ? Swal.fire({
+                    title: 'Error!',
+                    text: "Missing password",
+                    icon: 'error',
+                    confirmButtonText: 'Return'
+                })
+                : errorCode === 'auth/invalid-email' ? Swal.fire({
+                    title: 'Error!',
+                    text: "Invalid email",
+                    icon: 'error',
+                    confirmButtonText: 'Return'
+                })
+                : errorCode === 'auth/too-many-requests' ? Swal.fire({
+                    title: 'Error!',
+                    text: "Access to this account has been temporarily disabled due to many failed login attempts. Please, try again later.",
+                    icon: 'error',
+                    confirmButtonText: 'Return'
+                })
+                : console.log(`${errorCode}\n${errorMessage}`);
+
+
+            })
+            
 
         }catch(err){
             setErr(true)
-            console.log(err);
+            console.log(`erro: ${err}`);                        
         }
         
     }
@@ -75,8 +125,9 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <input type="email" placeholder='email'/>
                 <input type="password" placeholder='password'/>
-                <button >Sign in</button>
+                <button >Sign in</button>                
             </form>
+            {err && <span className='error'>something went wrong!</span>}
             <p>Does not have an account?  <Link to="/register">Register</Link></p>
             <p>Or</p>
             <a className='btnGoogleWrapper' onClick={handleButtonLoginGoogle}><GoogleBtn/></a>
