@@ -80,19 +80,19 @@ const Register = () => {
 
                 errorCode === "auth/invalid-email" ? Swal.fire({
                     title: 'Error!',
-                    text: "Invalid Email",
+                    text: "Invalid email",
                     icon: 'error',
                     confirmButtonText: 'Return'
                 })
                 : errorCode === "auth/weak-password" ? Swal.fire({
                     title: 'Error!',
-                    text: `Weak Password, password should be at least 6 characters`,
+                    text: `Weak password, password should be at least 6 characters`,
                     icon: 'error',
                     confirmButtonText: 'Return'
                 })
                 : errorCode === "auth/email-already-in-use" ? Swal.fire({
                     title: 'Error!',
-                    text: `Email Already In Use! try again with another email`,
+                    text: `Email already in use! try again with another email`,
                     icon: 'error',
                     confirmButtonText: 'Return'
                 })            
