@@ -72,7 +72,7 @@ const Search = () => {
 
 				document.getElementById("searchUser").value = "";				
 				setUser(null);
-				console.log(user);
+				// console.log(user);
 			}
 
 		} catch (err) {
@@ -96,7 +96,7 @@ const Search = () => {
             <img src={user.photoURL} alt="user profile picture" />
             <div className="userChatInfo">
                 <span style={{textTransform:'capitalize'}}>{user.displayName}</span>
-                <p>hello</p>
+                <p></p>
             </div>
         </div>}
 
