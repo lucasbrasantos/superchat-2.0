@@ -35,7 +35,7 @@ const Login = () => {
             await setDoc(doc(db, "userChats", user.uid), {});
 
 
-            navigate("/superchat-2.0");
+            navigate("/");
 
         }).catch((error) => {
             console.log(error);
@@ -64,7 +64,7 @@ const Login = () => {
                 
                 // console.log(res);                
                 // Swal.fire('Success', ' ', 'success');
-                navigate("/superchat-2.0");
+                navigate("/");
 
             }).catch((error) => {
 

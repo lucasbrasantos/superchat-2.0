@@ -41,7 +41,7 @@ const Register = () => {
             await setDoc(doc(db, "userChats", user.uid), {});
 
 
-            navigate("/superchat-2.0");
+            navigate("/");
 
         }).catch((error) => {
             console.log(error);
@@ -159,7 +159,7 @@ const Register = () => {
 
                         await setDoc(doc(db, "userChats", user.uid), {});
                         
-                        navigate("/superchat-2.0");
+                        navigate("/");
                     });
                 }
             );

@@ -10,7 +10,7 @@ const Search = () => {
   	const [err, setErr] = useState(false);
 
 	const {currentUser} = useContext(AuthContext)
-
+	// console.log(currentUser);
 	const handleSearch = async(x) => {
 
 		const q = query(
@@ -26,7 +26,6 @@ const Search = () => {
 			querySnapshot.forEach((doc) => {
 				setUser(doc.data());
 			})
-			
 			querySnapshot.empty && setUser(null); //clear/removes user when search box does not match the user display name
 
 		} catch (error) {
