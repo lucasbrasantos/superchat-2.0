@@ -11,7 +11,7 @@ const Navbar = () => {
     <div className='navbar'>
       <span className="logo">Superchat</span>
       <div className="user">
-        <img src={currentUser.photoURL} alt="profile picture" /> 
+        <img src={currentUser.photoURL} alt="profile" /> 
         <span >{currentUser.displayName}</span>
         <button onClick={() => { signOut(auth) }} >logout</button>
       </div>

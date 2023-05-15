@@ -17,23 +17,23 @@ const Input = () => {
 
 	const [text, setText] = useState("")
 	const [img, setImg] = useState(null)
+	
+	// console.log(text);
 
 	const handleSend = async() => {
-	  
 		if (img) {
-			
-			const storageRef = ref(storage, uuid());
+			console.log('eae');
+			const storageRef = ref(storage, `${data.chatId}/${uuid()}`);
 			const uploadTask = uploadBytesResumable(storageRef, img);
 
 			uploadTask.on(
 				(error) => {
-					//setErr(true)
 					console.log(error);
 				},
 				() => {
 
 					getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-						// console.log('File available at', downloadURL);
+						console.log('File available at', downloadURL);
 
 						await updateDoc(doc(db, "chats", data.chatId), {
 							messages: arrayUnion({
@@ -44,6 +44,7 @@ const Input = () => {
 								img:downloadURL,
 							}),
 						});
+						
 					});
 				}
 			);

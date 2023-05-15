@@ -41,7 +41,7 @@ const Search = () => {
 			? currentUser.uid + user.uid
 			: user.uid + currentUser.uid
 
-		console.log(user);
+		// console.log(user);
 		try {
 			const res = await getDoc(doc(db, "chats", combinedId));
 
@@ -94,7 +94,7 @@ const Search = () => {
         </div>
 		{err && <span>user not found</span>}
         {user && <div className="userChat" onClick={handleSelect}>
-            <img src={user.photoURL} alt="user profile picture" />
+            <img src={user.photoURL} alt="user profile" />
             <div className="userChatInfo">
                 <span style={{textTransform:'capitalize'}}>{user.displayName}</span>
                 <p></p>
