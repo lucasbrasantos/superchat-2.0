@@ -20,6 +20,10 @@ const Input = () => {
 	
 	// console.log(text);
 
+	const handleKey = (e) => {
+		e.code === "Enter" && handleSend();
+	}
+
 	const handleSend = async() => {
 		if (img) {
 			console.log('eae');
@@ -79,10 +83,12 @@ const Input = () => {
 	
 	}
 
+	
+
   return (
     <div className='input'>
 
-        <input type="text" placeholder='type something...' onChange={(e) => {setText(e.target.value)}} value={text} />
+        <input type="text" placeholder='type something...' onKeyDown={handleKey} onChange={(e) => {setText(e.target.value)}} value={text} />
         <div className="send">
             <input type="file" style={{display:'none'}} id="file" onChange={(e) => {setImg(e.target.files[0])}}/>
             
