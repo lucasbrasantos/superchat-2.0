@@ -21,7 +21,7 @@ function App() {
     // console.log(currentUser);
 
     return (
-        <BrowserRouter basename="/">
+        <BrowserRouter basename="/superchat-2.0">
             <Routes>
                 <Route path="/">
                     <Route index element={ <ProtectedRoute><Home/></ProtectedRoute> } />
