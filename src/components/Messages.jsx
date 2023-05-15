@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import Message from './Message'
 import { ChatContext } from '../context/ChatContext'
 import { doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
+import Message from './Message'
 
 const Messages = () => {
 
@@ -20,11 +20,14 @@ const Messages = () => {
 		}
 	}, [data.chatId])
 
+	console.log(messages)
 
 	return (
 		<div className='messages'>
+			{/* <Message/> */}
 			{messages.map((m) => {
-				<Message message={m} key={m.id} />
+				
+				return <Message message={m} key={m.id} />
 			})}
 		</div>
 	)
