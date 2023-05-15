@@ -27,7 +27,7 @@ const Search = () => {
 				setUser(doc.data());
 			})
 			
-			// querySnapshot.empty && setUser(null); //clear/removes user when search box does not match the user display name
+			querySnapshot.empty && setUser(null); //clear/removes user when search box does not match the user display name
 
 		} catch (error) {
 			setErr(true)
@@ -41,6 +41,7 @@ const Search = () => {
 			? currentUser.uid + user.uid
 			: user.uid + currentUser.uid
 
+		console.log(user);
 		try {
 			const res = await getDoc(doc(db, "chats", combinedId));
 
@@ -71,8 +72,8 @@ const Search = () => {
 				});
 
 				document.getElementById("searchUser").value = "";				
-				setUser(null);
 				// console.log(user);
+				setUser(null);
 			}
 
 		} catch (err) {
