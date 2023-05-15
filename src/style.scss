@@ -198,13 +198,16 @@
           border-bottom: 1px solid gray;
   
           .searchForm {
-            padding: 10px;
+            
   
             input {
               background-color: transparent;
               border: none;
               color: white;
               outline: none;
+              width: 100%;
+              height: 100%;
+              padding: 10px;
   
               &::placeholder {
                 color: lightgray;
