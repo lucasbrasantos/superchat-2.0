@@ -12,12 +12,13 @@ const Chats = () => {
 	const {currentUser} = useContext(AuthContext)
 	const {dispatch} = useContext(ChatContext)
 
+	// console.log(chats);
+
 	useEffect(() => {
 		const getChats = () => {
 			
 			const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {			
 				setChats(doc.data());
-	
 	
 			});
 		
@@ -32,13 +33,15 @@ const Chats = () => {
 
 	const handleSelect = (u) => {
 		dispatch({type:"CHANGE_USER", payload:u})
+		
 	}
+
 
 	// console.log(Object.entries(chats));
 	return (
 	<div className='chats'>
 
-		{Object.entries(chats)?.map((chat) => (
+		{Object.entries(chats)?.sort((a,b) => b[1].date - a[1].date).map((chat) => (
 			<div className="userChat" key={chat[0]} onClick={() => {handleSelect(chat[1].userInfo)}}>
 				<img src={chat[1].userInfo.photoURL} alt="user profile picture" />
 				<div className="userChatInfo">
